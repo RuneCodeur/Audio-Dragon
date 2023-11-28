@@ -1,189 +1,74 @@
 import React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, TouchableOpacity, StyleSheet, TextInput } from 'react-native';
 import Draggable from 'react-native-draggable';
 import {Dimensions} from 'react-native';
-import { Audio } from 'expo-av';
-import { createStackNavigator } from '@react-navigation/stack';
-import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
+import {GestionAudio} from './function/GestionAudio';
 
 export default class App extends React.Component {
 	constructor(props){
 		super(props);
-		this.isAudioPlay = false;
-		this.ismusicPlay = false;
-		this.isGreuPlay = false;
-		this.musicPlayer = null;
-		this.audioPlayer = null;
-		this.musicList = {
-			blabla:[
-				{
-					player:require('./audio/blabla1.wav'),
-					duration:2000
-				},
-				{
-					player:require('./audio/blabla2.wav'),
-					duration:1400
-				},
-				{
-					player:require('./audio/blabla3.wav'),
-					duration:1200
-				},
-				{
-					player:require('./audio/blabla4.wav'),
-					duration:1300
-				},
-				{
-					player:require('./audio/blabla5.wav'),
-					duration:1300
-				},
-				{
-					player:require('./audio/blabla6.wav'),
-					duration:3000
-				},
-				{
-					player:require('./audio/blabla7.wav'),
-					duration:2200
-				},
-				{
-					player:require('./audio/blabla8.wav'),
-					duration:2300
-				}
-			],
-			graou:[
-				{
-					player:require('./audio/graou1.wav'),
-					duration:1500
-				},
-				{
-					player:require('./audio/graou2.wav'),
-					duration:2000
-				},
-				{
-					player:require('./audio/graou3.wav'),
-					duration:1500
-				}
-			],
-			greu:{
-				player:require('./audio/greu.wav'),
-				duration:5000
-			},
-			ronron:{
-				player:require('./audio/ronron.wav'),
-				duration:2000
-			},
-			bigGraou: {
-				player:require('./audio/big-graou.wav'),
-				duration:5000
-			},
-			archangel:{
-				player:require('./audio/archangel.wav'),
-				duration:5000
-			}
-		};
+		this.state={
+			numberAutoVoice:0, 
+			randomAutoVoice:0
+		}
+		this.init = false;
+		this.GestionAudio = null;
+	}
 
+	componentDidMount(){
+		this.setState({ numberAutoVoice: this.GestionAudio.GETnumberAutoVoice() });
+		this.setState({ randomAutoVoice: this.GestionAudio.GETrandomAutoVoice() });
+	}
+
+	SETnumberAutoVoice(type){
+		if(type == '+'){
+			this.GestionAudio.SETnumberAutoVoice(this.GestionAudio.GETnumberAutoVoice()+1);
+		}else{
+			this.GestionAudio.SETnumberAutoVoice(this.GestionAudio.GETnumberAutoVoice()-1);
+		}
+		this.setState({ numberAutoVoice: this.GestionAudio.GETnumberAutoVoice() });
+	}
+
+	SETrandomAutoVoice(type){
+		if(type == '+'){
+			this.GestionAudio.SETrandomAutoVoice(this.GestionAudio.GETrandomAutoVoice()+1);
+		}else{
+			this.GestionAudio.SETrandomAutoVoice(this.GestionAudio.GETrandomAutoVoice()-1);
+		}
+		this.setState({ randomAutoVoice: this.GestionAudio.GETrandomAutoVoice() });
 	}
 
 	async activeAudio(touchX, touchY, action = 0){
-		//console.log('position Y : ' + touchY);
-		//console.log('position X : ' + touchX);
-
-
-		//long press // ok
-		if(action == 2){
-			if(this.ismusicPlay == false){
-				this.isAudioPlay = true;
-				this.ismusicPlay = true;
-				this.musicPlayer = new Audio.Sound();
-				await this.musicPlayer.loadAsync(this.musicList.archangel.player);
-				await this.musicPlayer.playAsync();
-			}
-			else{
-				await this.musicPlayer.unloadAsync();
-				this.ismusicPlay = false;
-				this.isAudioPlay = false;
-			}
-		}
-
-		//simple click // ok
-		else if(action == 1 && this.isAudioPlay == false){
-			console.log('simple click');
-			this.isAudioPlay = true;
-
-			let audioPlayer = new Audio.Sound();
-			await audioPlayer.loadAsync(this.musicList.bigGraou.player);
-			await audioPlayer.playAsync();
-			setTimeout(() => {
-				audioPlayer = null;
-				this.isAudioPlay = false;
-			}, this.musicList.bigGraou.duration);
-		}
-
-		//capteur du haut (blabla) // ok
-		else if(touchY < 250 && this.isAudioPlay == false){
-			console.log('blabla');
-			this.isAudioPlay = true;
-
-			let audioPlayer = new Audio.Sound();
-			let audioToPlay = Math.floor(Math.random() * this.musicList.blabla.length);
-			await audioPlayer.loadAsync(this.musicList.blabla[audioToPlay].player);
-			await audioPlayer.playAsync();
-			setTimeout(() => {
-				audioPlayer = null;
-				this.isAudioPlay = false;
-			}, this.musicList.blabla[audioToPlay].duration);
-		}
-		
-		//capteur du bas (greu)
-		else if(touchY > 550 && this.isAudioPlay == false){
-			console.log('greu');
-			this.isAudioPlay = true;
-			
-			let audioPlayer = new Audio.Sound();
-			await audioPlayer.loadAsync(this.musicList.greu.player);
-			await audioPlayer.playAsync();
-			setTimeout(() => {
-				audioPlayer = null;
-				this.isAudioPlay = false;
-			}, this.musicList.greu.duration);
-		}
-		
-		//capteur de gauche (ronron)
-		else if(touchX < 50 && this.isAudioPlay == false){
-
-			console.log('ronron');
-			this.isAudioPlay = true;
-			
-			let audioPlayer = new Audio.Sound();
-			await audioPlayer.loadAsync(this.musicList.ronron.player);
-			await audioPlayer.playAsync();
-			setTimeout(() => {
-				audioPlayer = null;
-				this.isAudioPlay = false;
-			}, this.musicList.ronron.duration);
-		}
-
-		//capteur de droite (graou) // ok
-		else if(touchX > 300 && this.isAudioPlay == false){
-			console.log('graou');
-			this.isAudioPlay = true;
-
-			let audioPlayer = new Audio.Sound();
-			let audioToPlay = Math.floor(Math.random() * this.musicList.graou.length);
-			await audioPlayer.loadAsync(this.musicList.graou[audioToPlay].player);
-			await audioPlayer.playAsync();
-			setTimeout(() => {
-				audioPlayer = null;
-				this.isAudioPlay = false;
-			}, this.musicList.graou[audioToPlay].duration);
-		}
+		this.GestionAudio.lanceAudio(touchX, touchY, action);
 	}
 
 	render() {
 		const windowWidth = Dimensions.get('window').width;
 		const windowHeight = Dimensions.get('window').height;
 		
+		if(this.init == false){
+			this.GestionAudio = new GestionAudio();
+			this.init = true;
+		}
+
 		return (
 			<View style={styles.container}>
+
+				{/* bouton de gestion de l'audio automatique  */}
+				{this.GestionAudio.GETisAutoVoice() ? (
+					<View>
+						<Text style={styles.text_inputbase}>random de base</Text>
+						<TouchableOpacity style={styles.inputbasemoins} onPress={() =>this.SETnumberAutoVoice('-')}><Text style={styles.inputtext}>-   </Text></TouchableOpacity>
+						<Text style={styles.inputbase}>{this.state.numberAutoVoice}</Text>
+						<TouchableOpacity style={styles.inputbaseplus} onPress={() =>this.SETnumberAutoVoice('+')}><Text style={styles.inputtext}>+  </Text></TouchableOpacity>
+						
+						<Text style={styles.text_inputrandom}>aléatoire</Text>
+						<TouchableOpacity style={styles.inputrandommoins} onPress={() =>this.SETrandomAutoVoice('-')}><Text style={styles.inputtext}>-   </Text></TouchableOpacity>
+						<Text style={styles.inputrandom}>{this.state.randomAutoVoice}</Text>
+						<TouchableOpacity style={styles.inputrandomplus} onPress={() =>this.SETrandomAutoVoice('+')}><Text style={styles.inputtext}>+  </Text></TouchableOpacity>
+					</View>
+				): null}
+
 				<Text style={styles.text_haut}>parler</Text>
 				<Text style={styles.text_bas}>grogner</Text>
 				<Text style={styles.text_droite}>hurler</Text>
@@ -209,6 +94,104 @@ const styles = StyleSheet.create({
 	  top:175,
 	  left: 160,
 	  fontSize: 15,
+	},
+	inputbase: {
+	  fontWeight: 'bold',
+	  color: 'white',
+	  position: 'absolute',
+	  borderWidth: 1,
+	  top:75,
+	  left: 50,
+	  width: 50,
+	  paddingLeft:10,
+	  fontSize: 15,
+	},
+	inputtext:{
+		color: 'white',
+		textAlign: 'center',
+		textAlignVertical:'center',
+		width:'100%',
+		height:'100%',
+	},
+	inputbaseplus:{
+		backgroundColor:'#252525',
+		color: 'white',
+		fontWeight: 'bold',
+		position: 'absolute',
+		borderRadius:50,
+		top:70,
+		left: 100,
+		height:35,
+		width:35,
+		paddingLeft:10,
+		fontSize: 15,
+	},
+	inputbasemoins:{
+		backgroundColor:'#252525',
+		color: 'white',
+		fontWeight: 'bold',
+		position: 'absolute',
+		borderRadius: 50,
+		top: 70,
+		left: 10,
+		height: 35,
+		width: 35,
+		paddingLeft: 10,
+		fontSize: 15,
+	},
+	text_inputbase: {
+		color: 'white',
+		fontWeight: 'bold',
+		position: 'absolute',
+		top:50,
+		left: 20,
+		fontSize: 15,
+	},
+	inputrandom: {
+		fontWeight: 'bold',
+		color: 'white',
+		position: 'absolute',
+		borderWidth: 1,
+		top:75,
+		left: 215,
+		width: 50,
+		paddingLeft:10,
+		fontSize: 15,
+	},
+	text_inputrandom: {
+		color: 'white',
+		fontWeight: 'bold',
+		position: 'absolute',
+		top:50,
+		left: 210,
+		fontSize: 15,
+	},
+	inputrandomplus:{
+		backgroundColor:'#252525',
+		color: 'white',
+		fontWeight: 'bold',
+		position: 'absolute',
+		borderRadius: 50,
+		top: 70,
+		left: 270,
+		height: 35,
+		width: 35,
+		paddingLeft: 10,
+		fontSize: 15,
+
+	},
+	inputrandommoins:{
+		backgroundColor:'#252525',
+		color: 'white',
+		fontWeight: 'bold',
+		position: 'absolute',
+		borderRadius: 50,
+		top: 70,
+		left: 170,
+		height: 35,
+		width: 35,
+		paddingLeft: 10,
+		fontSize: 15,
 	},
 	text_droite: {
 	  color: 'white',
