@@ -16,6 +16,3 @@ CREER UNE APK (ne marche pas avec le cmd de vscode):
 eas build -p android --profile preview
 
 ---------------------------------------------------------
-PROCHAINES MAJ
-appliquer une structure de personalisation de l'application
-mettre un bouton de choix sur l'aléatoire (si l'aléatoire se base sur blabla ou graou ou autre)
