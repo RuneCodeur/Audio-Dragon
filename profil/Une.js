@@ -145,15 +145,15 @@ export class ProfilAudio extends BaseAudio{
 				Audio:[
 					{
 						Source : require('./audio/Une/FORT_blabla1.wav'),
-						Duration : 2000
-					},
-					{
-						Source : require('./audio/Une/FORT_blabla2.wav'),
 						Duration : 1400
 					},
 					{
+						Source : require('./audio/Une/FORT_blabla2.wav'),
+						Duration : 3000
+					},
+					{
 						Source : require('./audio/Une/FORT_blabla3.wav'),
-						Duration : 1200
+						Duration : 2200
 					}
 				]
 			},
@@ -210,15 +210,15 @@ export class ProfilAudio extends BaseAudio{
 				Audio:[
 					{
 						Source : require('./audio/Une/FORT_blabla1.wav'),
-						Duration : 2000
+						Duration : 1400
 					},
 					{
 						Source : require('./audio/Une/FORT_blabla2.wav'),
-						Duration : 1400
+						Duration : 3000
 					},
 					{
 						Source : require('./audio/Une/FORT_blabla3.wav'),
-						Duration : 1400
+						Duration : 2200
 					},
 					{
 						Source : require('./audio/Une/FORT_graou1.wav'),
