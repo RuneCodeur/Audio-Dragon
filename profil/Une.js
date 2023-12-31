@@ -137,8 +137,8 @@ export class ProfilAudio extends BaseAudio{
 		},
 		{
 			Theme:'volume fort',
-			NumberAutoVoice:1,
-			RandomAutoVoice:0,
+			NumberAutoVoice:3,
+			RandomAutoVoice:2,
 			Top :{
 				Name: 'parler',
 				Type:1,
@@ -154,26 +154,6 @@ export class ProfilAudio extends BaseAudio{
 					{
 						Source : require('./audio/Une/FORT_blabla3.wav'),
 						Duration : 1200
-					},
-					{
-						Source : require('./audio/Une/FORT_blabla4.wav'),
-						Duration : 1300
-					},
-					{
-						Source : require('./audio/Une/FORT_blabla5.wav'),
-						Duration : 1300
-					},
-					{
-						Source : require('./audio/Une/FORT_blabla6.wav'),
-						Duration : 3000
-					},
-					{
-						Source : require('./audio/Une/FORT_blabla7.wav'),
-						Duration : 2200
-					},
-					{
-						Source : require('./audio/Une/FORT_blabla8.wav'),
-						Duration : 2300
 					}
 				]
 			},
@@ -238,27 +218,19 @@ export class ProfilAudio extends BaseAudio{
 					},
 					{
 						Source : require('./audio/Une/FORT_blabla3.wav'),
-						Duration : 1200
+						Duration : 1400
 					},
 					{
-						Source : require('./audio/Une/FORT_blabla4.wav'),
-						Duration : 1300
+						Source : require('./audio/Une/FORT_graou1.wav'),
+						Duration : 1400
 					},
 					{
-						Source : require('./audio/Une/FORT_blabla5.wav'),
-						Duration : 1300
+						Source : require('./audio/Une/FORT_graou2.wav'),
+						Duration : 1400
 					},
 					{
-						Source : require('./audio/Une/FORT_blabla6.wav'),
-						Duration : 3000
-					},
-					{
-						Source : require('./audio/Une/FORT_blabla7.wav'),
-						Duration : 2200
-					},
-					{
-						Source : require('./audio/Une/FORT_blabla8.wav'),
-						Duration : 2300
+						Source : require('./audio/Une/FORT_graou3.wav'),
+						Duration : 1400
 					}
 				]
 			}
@@ -269,43 +241,108 @@ export class ProfilAudio extends BaseAudio{
 			NumberAutoVoice:0,
 			RandomAutoVoice:0,
 			Top :{
-				Name: 'parler',
+				Name: 'augh',
 				Type:1,
 				Audio:[
 					{
-						Source : require('./audio/Une/FORT_blabla1.wav'),
-						Duration : 2000
-					}
-				]
-			},
-			Right :{
-				Name: 'hurler',
-				Type:1,
-				Audio:[
+						Source : require('./audio/Une/TROLL_augh1.wav'),
+						Duration : 1500
+					},
 					{
-						Source : require('./audio/Une/FORT_graou1.wav'),
+						Source : require('./audio/Une/TROLL_augh2.wav'),
+						Duration : 1500
+					},
+					{
+						Source : require('./audio/Une/TROLL_augh3.wav'),
+						Duration : 1500
+					},
+					{
+						Source : require('./audio/Une/TROLL_augh4.wav'),
 						Duration : 1500
 					}
 				]
 			},
+			Right :{
+				Name: 'insultes',
+				Type:0,
+				Audio:[]
+			},
 			Bottom :{
-				Name: 'grogner',
+				Name: 'AUGH',
 				Type:1,
 				Audio:[
 					{
-						Source : require('./audio/Une/FORT_greu.wav'),
-						Duration : 5000
+						Source : require('./audio/Une/TROLL_bigaugh.wav'),
+						Duration : 3000
 					}
 				]
 			},
 			Left :{
-				Name: 'ronroner',
+				Name: 'Kaamelott',
 				Type:1,
 				Audio:[
 					{
-						Source : require('./audio/Une/FORT_ronron.wav'),
-						Duration : 1200
+						Source : require('./audio/Une/TROLL_kaamelott1.wav'),
+						Duration : 2200
+					},
+					{
+						Source : require('./audio/Une/TROLL_kaamelott2.wav'),
+						Duration : 3700
+					},
+					{
+						Source : require('./audio/Une/TROLL_kaamelott3.wav'),
+						Duration : 3100
+					},
+					{
+						Source : require('./audio/Une/TROLL_kaamelott4.wav'),
+						Duration : 4900
+					},
+					{
+						Source : require('./audio/Une/TROLL_kaamelott5.wav'),
+						Duration : 1400
+					},
+					{
+						Source : require('./audio/Une/TROLL_kaamelott6.wav'),
+						Duration : 1900
 					}
+				]
+			},
+			Tap :{
+				Name: 'rift',
+				Type:1,
+				Audio:[
+					{
+						Source : require('./audio/Une/TROLL_metal1.wav'),
+						Duration : 7000
+					},
+					{
+						Source : require('./audio/Une/TROLL_metal2.wav'),
+						Duration : 5000
+					},
+					{
+						Source : require('./audio/Une/TROLL_metal3.wav'),
+						Duration : 6000
+					},
+					{
+						Source : require('./audio/Une/TROLL_metal4.wav'),
+						Duration : 6000
+					},
+					{
+						Source : require('./audio/Une/TROLL_metal5.wav'),
+						Duration : 8000
+					},
+					{
+						Source : require('./audio/Une/TROLL_metal6.wav'),
+						Duration : 10000
+					},
+					{
+						Source : require('./audio/Une/TROLL_metal7.wav'),
+						Duration : 7000
+					},
+					{
+						Source : require('./audio/Une/TROLL_metal8.wav'),
+						Duration : 8000
+					},
 				]
 			}
 		}]
