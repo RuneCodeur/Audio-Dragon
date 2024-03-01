@@ -9,10 +9,10 @@ export default class App extends React.Component {
 	constructor(props){
 		super(props);
 		this.state={
-			IsAutoVoice:false,
-			IsMultiTheme:false,
-			NumberAutoVoice:0, 
-			RandomAutoVoice:0,
+			IsAutoVoice: false,
+			IsMultiTheme: false,
+			NumberAutoVoice: 0, 
+			RandomAutoVoice: 0,
 			Name_Top: '-',
 			Name_Right: '-',
 			Name_Bottom: '-',
@@ -20,7 +20,7 @@ export default class App extends React.Component {
 			Name_Tap: '-',
 			Name_Press: '-',
 			Theme_List: [],
-			Theme_Active : null,
+			Theme_Active: null,
 		};
 		this.Init = false;
 		this.GestionAudio = null;
@@ -128,20 +128,8 @@ export default class App extends React.Component {
 					): null}
 				</View>
 
-				<Text style={styles.text_top}>{this.state.Name_Top}</Text>
-				<Text style={styles.text_right}>{this.state.Name_Right}</Text>
-				<Text style={styles.text_bottom}>{this.state.Name_Bottom}</Text>
-				<Text style={styles.text_left}>{this.state.Name_Left}</Text>
+				{this.GestionAudio.ControlVue()}
 
-				{/* infos inferieur */}
-				<View style={styles.bloc_info_down}>
-					<Text style={styles.text_supp}>tap : {this.state.Name_Tap}</Text>
-					<Text style={styles.text_supp}>pression : {this.state.Name_Press}</Text>
-				</View>
-				
-				{/* rond manipulable */}
-				<Draggable x={(windowWidth/2)-75} y={(windowHeight/2)-40} renderSize={150} renderColor='#252525' renderText='' isCircle shouldReverse onLongPress={(evt)=>this.activeAudio(evt.nativeEvent.pageX, evt.nativeEvent.pageY, 2)} onShortPressRelease={(evt)=>this.activeAudio(evt.nativeEvent.pageX, evt.nativeEvent.pageY, 1)} onDrag={(evt)=>this.activeAudio(evt.nativeEvent.pageX, evt.nativeEvent.pageY)}/> 
-    			
 			</View>
 		);
 	}
@@ -221,59 +209,4 @@ const styles = StyleSheet.create({
 		marginBottom: 5,
 		backgroundColor:'white',
 	},
-
-	text_top: {
-		color: 'white',
-		fontWeight: 'bold',
-		position: 'absolute',
-		textAlign:'center',
-		top:175,
-		width:'100%',
-		fontSize: 15,
-	},
-	text_right: {
-		color: 'white',
-		fontWeight: 'bold',
-		position: 'absolute',
-		top:364,
-		right: 10,
-		fontSize: 15,
-	},
-	text_bottom: {
-		color: 'white',
-		fontWeight: 'bold',
-		position: 'absolute',
-		textAlign:'center',
-		top:600,
-		width:'100%',
-		fontSize: 15,
-	},
-	text_left: {
-		color: 'white',
-		fontWeight: 'bold',
-		position: 'absolute',
-		top:364,
-		left:10,
-		fontSize: 15,
-	},
-
-	bloc_info_down:{
-		position: 'absolute',
-		flex:1,
-		backgroundColor:'#252525',
-		bottom:0,
-		paddingBottom:15,
-		flexDirection: 'row',
-    	justifyContent: 'space-around',
-		width:'100%',
-		minHeight:50,
-	},
-	text_supp : {
-		color: 'white',
-		marginTop:5,
-		fontWeight: 'bold',
-		textAlign: 'center',
-		maxWidth:'45%'
-	},
-
-  });
+});

@@ -9,8 +9,9 @@ export class ProfilAudio extends BaseAudio{
 		
 		BaseAudio.ListParameter = [{
 			Theme:'volume defaut',
-			NumberAutoVoice:3,
-			RandomAutoVoice:2,
+			NumberAutoVoice:0, //2
+			RandomAutoVoice:0, //3
+			TypeVue: 1,
 			Top :{
 				Name: 'parler',
 				Type:1,
@@ -137,8 +138,9 @@ export class ProfilAudio extends BaseAudio{
 		},
 		{
 			Theme:'volume fort',
-			NumberAutoVoice:3,
-			RandomAutoVoice:2,
+			NumberAutoVoice:0, //2
+			RandomAutoVoice:0, //3
+			TypeVue: 1,
 			Top :{
 				Name: 'parler',
 				Type:1,
@@ -240,6 +242,7 @@ export class ProfilAudio extends BaseAudio{
 			Theme:'troll',
 			NumberAutoVoice:0,
 			RandomAutoVoice:0,
+			TypeVue: 1,
 			Top :{
 				Name: 'augh',
 				Type:1,
@@ -263,9 +266,18 @@ export class ProfilAudio extends BaseAudio{
 				]
 			},
 			Right :{
-				Name: 'insultes',
-				Type:0,
-				Audio:[]
+				Name: 'Dance',
+				Type:3,
+				Audio:[
+					{
+						Source : require('./audio/Une/TROLL_dance1.wav'),
+						Duration : 211000
+					},
+					{
+						Source : require('./audio/Une/TROLL_dance2.wav'),
+						Duration : 171000
+					}
+				]
 			},
 			Bottom :{
 				Name: 'AUGH',
@@ -345,7 +357,29 @@ export class ProfilAudio extends BaseAudio{
 					},
 				]
 			}
-		}]
-
-    }
+		},
+		{
+			Theme:'spectacle-TEST',
+			TypeVue: 2,
+			Deck :[
+				{
+					Source : require('./audio/Une/TROLL_augh1.wav'),
+					Duration : 1500
+				},
+				{
+					Source : require('./audio/Une/TROLL_augh2.wav'),
+					Duration : 1500
+				},
+				{
+					Source : require('./audio/Une/TROLL_augh3.wav'),
+					Duration : 1500
+				},
+				{
+					Source : require('./audio/Une/TROLL_augh4.wav'),
+					Duration : 1500
+				}
+			]
+		}
+	
+	]}
 }
