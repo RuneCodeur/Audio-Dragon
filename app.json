@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "Audio Dragon",
-    "slug": "audio-dragon",
-    "version": "1.0.0",
+    "name": "Audio-Dragon",
+    "slug": "Audio-Dragon",
+    "version": "3.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -11,28 +11,22 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*",
-      "assets/**/*",
-      "audio/**/*"
-    ],
     "ios": {
       "supportsTablet": true
     },
     "android": {
-      "permissions": ["READ_EXTERNAL_STORAGE", "WRITE_EXTERNAL_STORAGE", "MEDIA_CONTENT_CONTROL"],
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.rackhamledev.audiodragon"
+      "package": "com.rackhamledev.AudioDragon"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "extra": {
       "eas": {
-        "projectId": "ad22d9e5-ea3f-4b1c-917f-2735681b01d1"
+        "projectId": "94ae0346-c54d-4104-94cd-ef432738dbbc"
       }
     }
   }

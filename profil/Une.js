@@ -9,8 +9,8 @@ export class ProfilAudio extends BaseAudio{
 		
 		BaseAudio.ListParameter = [{
 			Theme:'volume defaut',
-			NumberAutoVoice:0, //2
-			RandomAutoVoice:0, //3
+			NumberAutoVoice:2,
+			RandomAutoVoice:3,
 			TypeVue: 1,
 			Top :{
 				Name: 'parler',
@@ -138,8 +138,8 @@ export class ProfilAudio extends BaseAudio{
 		},
 		{
 			Theme:'volume fort',
-			NumberAutoVoice:0, //2
-			RandomAutoVoice:0, //3
+			NumberAutoVoice:2,
+			RandomAutoVoice:3,
 			TypeVue: 1,
 			Top :{
 				Name: 'parler',
@@ -265,30 +265,28 @@ export class ProfilAudio extends BaseAudio{
 					}
 				]
 			},
-			Right :{
-				Name: 'Dance',
+			Bottom :{
+				Name: 'Ultra-Instinct',
 				Type:3,
 				Audio:[
 					{
-						Source : require('./audio/Une/TROLL_dance1.wav'),
-						Duration : 211000
+						Source : require('./audio/Une/TROLL_ultra.wav'),
+						Duration : 68000
 					},
-					{
-						Source : require('./audio/Une/TROLL_dance2.wav'),
-						Duration : 171000
-					}
 				]
 			},
-			Bottom :{
-				Name: 'AUGH',
+			
+			Right :{
+				Name: 'AUGH', 
 				Type:1,
 				Audio:[
 					{
 						Source : require('./audio/Une/TROLL_bigaugh.wav'),
 						Duration : 3000
-					}
+					},
 				]
 			},
+			
 			Left :{
 				Name: 'Kaamelott',
 				Type:1,
@@ -318,8 +316,64 @@ export class ProfilAudio extends BaseAudio{
 						Duration : 1900
 					}
 				]
+			}
+		},
+		{
+			Theme:'Music',
+			NumberAutoVoice:0,
+			RandomAutoVoice:0,
+			TypeVue: 1,
+			Top :{
+				Name: 'Krokmou',
+				Type:3,
+				Audio:[
+					{
+						Source : require('./audio/Une/TROLL_dance1.wav'),
+						Duration : 211000
+					}
+				]
 			},
-			Tap :{
+			Right :{
+				Name: 'Yoshi',
+				Type:3,
+				Audio:[
+					{
+						Source : require('./audio/Une/TROLL_dance2.wav'),
+						Duration : 171000
+					}
+				]
+			},
+			Left :{
+				Name: 'Bardix',
+				Type:3,
+				Audio:[
+					{
+						Source : require('./audio/Une/MUSIC_bardix1.wav'),
+						Duration : 138000
+					},
+					{
+						Source : require('./audio/Une/MUSIC_bardix2.wav'),
+						Duration : 141000
+					},
+					{
+						Source : require('./audio/Une/MUSIC_bardix3.wav'),
+						Duration : 106000
+					},
+					{
+						Source : require('./audio/Une/MUSIC_bardix4.wav'),
+						Duration : 160000
+					},
+					{
+						Source : require('./audio/Une/MUSIC_bardix5.wav'),
+						Duration : 169000
+					},
+					{
+						Source : require('./audio/Une/MUSIC_bardix6.wav'),
+						Duration :196000
+					},
+				]
+			},
+			Bottom :{
 				Name: 'rift',
 				Type:1,
 				Audio:[
@@ -357,28 +411,6 @@ export class ProfilAudio extends BaseAudio{
 					},
 				]
 			}
-		},
-		{
-			Theme:'spectacle-TEST',
-			TypeVue: 2,
-			Deck :[
-				{
-					Source : require('./audio/Une/TROLL_augh1.wav'),
-					Duration : 1500
-				},
-				{
-					Source : require('./audio/Une/TROLL_augh2.wav'),
-					Duration : 1500
-				},
-				{
-					Source : require('./audio/Une/TROLL_augh3.wav'),
-					Duration : 1500
-				},
-				{
-					Source : require('./audio/Une/TROLL_augh4.wav'),
-					Duration : 1500
-				}
-			]
 		}
 	
 	]}

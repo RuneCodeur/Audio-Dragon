@@ -72,6 +72,7 @@ export default class App extends React.Component {
 		this.setState({ Name_Left: this.GestionAudio.GETnameButton('Left') });
 		this.setState({ Name_Tap: this.GestionAudio.GETnameButton('Tap') });
 		this.setState({ Name_Press: this.GestionAudio.GETnameButton('Press') });
+		
 	}
 
 	async activeAudio(touchX, touchY, action = 0){
@@ -118,7 +119,7 @@ export default class App extends React.Component {
 					
 					{/* bouton de gestion des themes */}
 					{this.state.IsMultiTheme ? (
-						<Picker style={styles.bloc_theme} onValueChange={(theme) => this.SETthemeActive(theme)} selectedValue={this.state.Theme_Active}>
+						<Picker style={styles.bloc_theme} itemStyle={styles.choix_theme} onValueChange={(theme) => this.SETthemeActive(theme)} selectedValue={this.state.Theme_Active}>
 						
 							{this.state.Theme_List.map((theme, index) => (
 								<Picker.Item key={index} label={theme} value={index} />
@@ -126,6 +127,8 @@ export default class App extends React.Component {
 
 						</Picker>
 					): null}
+
+
 				</View>
 
 				{this.GestionAudio.ControlVue()}
@@ -208,5 +211,9 @@ const styles = StyleSheet.create({
 		width : '90%',
 		marginBottom: 5,
 		backgroundColor:'white',
+	},
+	choix_theme: {
+	  color: 'black',
+	  fontSize: 16,
 	},
 });

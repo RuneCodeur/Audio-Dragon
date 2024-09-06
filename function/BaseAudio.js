@@ -1,18 +1,21 @@
 import { Audio } from 'expo-av';
-import { Text, View, StyleSheet} from 'react-native';
+import { Text, View, StyleSheet, ScrollView, TouchableOpacity} from 'react-native';
 import {Dimensions} from 'react-native';
 import Draggable from 'react-native-draggable';
+import { Picker } from '@react-native-picker/picker';
 
 export class BaseAudio{
 
-    static NumberAutoVoice = 3;
-    static RandomAutoVoice = 2;
+    static NumberAutoVoice = 0;
+    static RandomAutoVoice = 0;
     static CountAutoVoice = 0;
     static IsAutoVoice = false;
     static ThemeActive = 0;
+    static NumberCardDeck = 0;
     static CountRandomAutoVoice = 0;
     static IsAudioPlay = false;
     static IsMusicPlay = false;
+    static IDMusicPlay = null;
     static IntervalAutoVoice = null;
     static ListParameter = [{}];
     static ListButton = ['Top', 'Right', 'Bottom', 'Left', 'Tap','Press', 'Auto'];
@@ -221,6 +224,7 @@ export class BaseAudio{
                 console.log('type audio non défini : ' + Range);
             }
             else if(BaseAudio.IsMusicPlay == false){
+                console.log('play de la musique');
                 BaseAudio.IsMusicPlay = true;
                 BaseAudio.IsAudioPlay = true;
                 let AudioToPlay = this.randomPlay(Range);
@@ -231,6 +235,7 @@ export class BaseAudio{
                 
                 else{
                     console.log('play de l audio "'+ Range +'":' + AudioToPlay);
+                    BaseAudio.IDMusicPlay = Range;
                     if(BaseAudio.ListPlayer[BaseAudio.ListMusic[Range].Audio[AudioToPlay]].Played == false){
                         await BaseAudio.ListPlayer[BaseAudio.ListMusic[Range].Audio[AudioToPlay]].AudioPlayer.playAsync();
                     }
@@ -239,9 +244,12 @@ export class BaseAudio{
                     }
                 }
             }
-            else{
+            else if(BaseAudio.IDMusicPlay == Range){
+                console.log('arret de la musique');
                 BaseAudio.IsMusicPlay = false;
                 BaseAudio.IsAudioPlay = true;
+                
+                BaseAudio.IDMusicPlay = null;
 
                 for (let IndexAudio = 0; IndexAudio < BaseAudio.ListMusic[Range].Audio.length; IndexAudio++) {
                     if(BaseAudio.ListPlayer[BaseAudio.ListMusic[Range].Audio[IndexAudio]] && BaseAudio.ListPlayer[BaseAudio.ListMusic[Range].Audio[IndexAudio]].Active == true){
@@ -266,16 +274,22 @@ export class BaseAudio{
             BaseAudio.IsAudioPlay = true;
             if(BaseAudio.ListParameter[BaseAudio.ThemeActive]){
                 console.log('chargement du theme : ' + BaseAudio.ListParameter[BaseAudio.ThemeActive].Theme);
+                let ThemeActive = BaseAudio.ThemeActive;
+                BaseAudio.typeVue = BaseAudio.ListParameter[ThemeActive].TypeVue;
 
-                // définition des noms des boutons
+                // définition des noms des boutons du type ball
                 BaseAudio.ListButton.forEach(button => {
                     this.loaderNames(button);
                 });
+                
+                // définition des noms des boutons du type deck
+
+                if(BaseAudio.typeVue == 2){
+                    BaseAudio.NumberCardDeck = BaseAudio.ListParameter[ThemeActive].Deck.length;
+                }
 
                 // calcul des variables du son aléatoire
-                let ThemeActive = BaseAudio.ThemeActive;
                 
-                BaseAudio.typeVue = BaseAudio.ListParameter[ThemeActive].TypeVue;
 
                 if(BaseAudio.ListParameter[ThemeActive].NumberAutoVoice && typeof BaseAudio.ListParameter[ThemeActive].NumberAutoVoice === 'number' && Number.isInteger(BaseAudio.ListParameter[ThemeActive].NumberAutoVoice)){
                     BaseAudio.NumberAutoVoice = BaseAudio.ListParameter[ThemeActive].NumberAutoVoice;
@@ -294,13 +308,18 @@ export class BaseAudio{
                 //vide la variable ListPlayer
                 await this.PurgeListPlayer();
 
-                //définition des audios
-                for (const button of BaseAudio.ListButton) {
-                    await this.loaderRange(button);
+                //définition des audios du type ball
+                if(BaseAudio.typeVue == 1){
+                    for (const button of BaseAudio.ListButton) {
+                        await this.loaderRange(button);
+                    }
                 }
                 
-                //définition des audios du deck
-                await this.loaderDeck();
+                // définition des audios du type deck
+                else if(BaseAudio.typeVue == 2){
+                    
+                    await this.loaderDeck();
+                }
             }
         } 
         catch (error) {
@@ -315,7 +334,13 @@ export class BaseAudio{
 
 
     async loaderDeck(){
-        //console.log(BaseAudio.ListMusic);
+        
+        if(BaseAudio.ListParameter[BaseAudio.ThemeActive]){
+            for (let IndexAudio = 0; IndexAudio < BaseAudio.ListParameter[BaseAudio.ThemeActive].Deck.length; IndexAudio++) {
+                let idPlayer = this.GetNewPlayer();
+                await this.initPlayer(idPlayer, BaseAudio.ListParameter[BaseAudio.ThemeActive].Deck[IndexAudio]);
+            }
+        }
     }
 
     loaderNames(button){
@@ -384,7 +409,7 @@ export class BaseAudio{
             const player = BaseAudio.ListPlayer[index];
 
             player.AudioPlayer.unloadAsync();
-            player.duration = 0;
+            player.Duration = 0;
             player.associed = false;
             player.Played = false;
             player.Active = false;
@@ -480,32 +505,41 @@ export class BaseAudio{
 		const windowHeight = Dimensions.get('window').height;
 
         return(
-            <View>
+            <View style={styles.bloc_info}>
                 
 				<Text style={styles.text_top}>{this.GETnameButton('Top')}</Text>
 				<Text style={styles.text_right}>{this.GETnameButton('Right')}</Text>
 				<Text style={styles.text_bottom}>{this.GETnameButton('Bottom')}</Text>
 				<Text style={styles.text_left}>{this.GETnameButton('Left')}</Text>
-
-				{/* infos inferieur */}
+				
+				{/* rond manipulable */}
+				<Draggable x={(windowWidth/2)-75} y={(windowHeight/2)-40 -150} renderSize={150} renderColor='#252525' renderText='' isCircle shouldReverse onLongPress={(evt)=>this.lanceAudio(evt.nativeEvent.pageX, evt.nativeEvent.pageY, 2)} onShortPressRelease={(evt)=>this.lanceAudio(evt.nativeEvent.pageX, evt.nativeEvent.pageY, 1)} onDrag={(evt)=>this.lanceAudio(evt.nativeEvent.pageX, evt.nativeEvent.pageY)}/> 
+    			
+                {/* infos inferieur */}
 				<View style={styles.bloc_info_down}>
 					<Text style={styles.text_supp}>tap : {this.GETnameButton('Tap')}</Text>
 					<Text style={styles.text_supp}>pression : {this.GETnameButton('Press')}</Text>
 				</View>
-				
-				{/* rond manipulable */}
-				<Draggable x={(windowWidth/2)-75} y={(windowHeight/2)-40} renderSize={150} renderColor='#252525' renderText='' isCircle shouldReverse onLongPress={(evt)=>this.activeAudio(evt.nativeEvent.pageX, evt.nativeEvent.pageY, 2)} onShortPressRelease={(evt)=>this.activeAudio(evt.nativeEvent.pageX, evt.nativeEvent.pageY, 1)} onDrag={(evt)=>this.lanceAudio(evt.nativeEvent.pageX, evt.nativeEvent.pageY)}/> 
-    			
             </View>
         )
     }
 
     //vue modèle carte
     VUECard(){
+
+        let ListPlayerActive = [];
+        for (let i = 0; i < BaseAudio.NumberCardDeck; i++) {
+            ListPlayerActive.push(i);
+        }
+
         return(
-            <View>
-                <Text > button</Text>
-            </View>
+            <ScrollView style={styles.scroll_bloc_card}>
+                <View style={styles.bloc_card}>
+                        {ListPlayerActive.map((item, index) => (
+                            <Text style={styles.card} key={index}>{item+1}</Text>
+                        ))}
+                </View>
+            </ScrollView>
         )
     }
 
@@ -523,14 +557,32 @@ export class BaseAudio{
         
 
         if(MaxAudio > 1){
-            let AudioToPlay = parseInt(Math.floor(Math.random() * MaxAudio));
-            
-            if(AudioToPlay == BaseAudio.ListMusic[Action].LastPlayed ){
-                return this.randomPlay(Action);
-            }
-            else{
-                BaseAudio.ListMusic[Action].LastPlayed = AudioToPlay;
-                return AudioToPlay;
+            if(BaseAudio.ListMusic[Action].Type == 3){
+                console.log(BaseAudio.ListMusic[Action].LastPlayed + ' - ' + MaxAudio);
+                if(BaseAudio.ListMusic[Action].LastPlayed != undefined){
+                    if(BaseAudio.ListMusic[Action].LastPlayed == MaxAudio-1){    
+                        BaseAudio.ListMusic[Action].LastPlayed = 0
+                        return 0
+                    }else{
+                        BaseAudio.ListMusic[Action].LastPlayed = BaseAudio.ListMusic[Action].LastPlayed +1;
+                        return BaseAudio.ListMusic[Action].LastPlayed;
+
+                    }
+                }else{
+                    BaseAudio.ListMusic[Action].LastPlayed = 0
+                    return 0
+                }
+
+            }else{
+                let AudioToPlay = parseInt(Math.floor(Math.random() * MaxAudio));
+                if(AudioToPlay == BaseAudio.ListMusic[Action].LastPlayed ){
+                    return this.randomPlay(Action);
+                }
+                else{
+                    BaseAudio.ListMusic[Action].LastPlayed = AudioToPlay;
+                    return AudioToPlay;
+                }
+
             }
         }
         else{
@@ -577,12 +629,37 @@ export class BaseAudio{
 
 
 const styles = StyleSheet.create({
+    
+    scroll_bloc_card:{
+        marginTop:100,
+    },
+    bloc_card:{
+		width:'100%',
+        display:'flex',
+        flexDirection:'row',
+        flexWrap:'wrap',
+		backgroundColor:'#101010',
+
+    },
+    card:{
+        width:70,
+        height:90,
+		fontSize: 20,
+		color: 'white',
+        textAlign:'center',
+        paddingTop:25,
+		fontWeight: 'bold',
+        margin:10,
+        borderRadius:5,
+		backgroundColor:'#252525',
+    },
+
 	text_top: {
 		color: 'white',
 		fontWeight: 'bold',
 		position: 'absolute',
 		textAlign:'center',
-		top:175,
+		top:25,
 		width:'100%',
 		fontSize: 15,
 	},
@@ -590,7 +667,7 @@ const styles = StyleSheet.create({
 		color: 'white',
 		fontWeight: 'bold',
 		position: 'absolute',
-		top:364,
+		top:214,
 		right: 10,
 		fontSize: 15,
 	},
@@ -599,7 +676,7 @@ const styles = StyleSheet.create({
 		fontWeight: 'bold',
 		position: 'absolute',
 		textAlign:'center',
-		top:600,
+		top:450,
 		width:'100%',
 		fontSize: 15,
 	},
@@ -607,10 +684,16 @@ const styles = StyleSheet.create({
 		color: 'white',
 		fontWeight: 'bold',
 		position: 'absolute',
-		top:364,
+		top:214,
 		left:10,
 		fontSize: 15,
 	},
+
+    bloc_info:{
+		width:'100%',
+        marginTop:150,
+		flex:1,
+    },
 
 	bloc_info_down:{
 		position: 'absolute',
