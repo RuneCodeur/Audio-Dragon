@@ -229,10 +229,6 @@ export class ProfilAudio extends BaseAudio{
 					{
 						Source : require('./audio/Une/FORT_graou2.wav'),
 						Duration : 1400
-					},
-					{
-						Source : require('./audio/Une/FORT_graou3.wav'),
-						Duration : 1400
 					}
 				]
 			}
@@ -324,21 +320,25 @@ export class ProfilAudio extends BaseAudio{
 			RandomAutoVoice:0,
 			TypeVue: 1,
 			Top :{
-				Name: 'Krokmou',
+				Name: 'Krokmou/Yoshi',
 				Type:3,
 				Audio:[
 					{
 						Source : require('./audio/Une/TROLL_dance1.wav'),
 						Duration : 211000
+					},
+					{
+						Source : require('./audio/Une/TROLL_dance2.wav'),
+						Duration : 171000
 					}
 				]
 			},
 			Right :{
-				Name: 'Yoshi',
+				Name: 'LOTR',
 				Type:3,
 				Audio:[
 					{
-						Source : require('./audio/Une/TROLL_dance2.wav'),
+						Source : require('./audio/Une/LOTR.wav'),
 						Duration : 171000
 					}
 				]
