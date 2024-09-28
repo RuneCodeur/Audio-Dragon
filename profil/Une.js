@@ -262,11 +262,15 @@ export class ProfilAudio extends BaseAudio{
 				]
 			},
 			Bottom :{
-				Name: 'Ultra-Instinct',
+				Name: 'Agressive',
 				Type:3,
 				Audio:[
 					{
 						Source : require('./audio/Une/TROLL_ultra.wav'),
+						Duration : 68000
+					},
+					{
+						Source : require('./audio/Une/TROLL_darksouls.wav'),
 						Duration : 68000
 					},
 				]
